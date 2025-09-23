@@ -39,8 +39,8 @@ def cadastrar_livro(titulo, autor, ano):
             conexao.close()
 
 titulo = input("Qual o nome do livro que deseja cadastrar:  ")
-autor = input(f"Qual o autor do livro - {titulo}: ")
-ano = int(input(f"Qual o nome do livro - {titulo}: "))
+autor = input(f"Qual o autor do livro - |{titulo}|: ")
+ano = int(input(f"Qual o nome do livro - |{titulo}|: "))
 
 cadastrar_livro(titulo, autor, ano)
 
