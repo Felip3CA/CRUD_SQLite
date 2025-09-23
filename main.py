@@ -17,7 +17,7 @@ print("Consegui fazer alguma coisa!")
 
 
 #Etapa 2 - Função de Cadastro
-def cadastrar_livro(titulo, autor, ano):
+def cadastrar_livro(titulo, autor, ano, disponivel="Sim"):
     try:
         # Conectando ao banco de dados
         conexao = sqlite3.connect("biblioteca.db")
