@@ -24,8 +24,8 @@ def cadastrar_livro(titulo, autor, ano, disponivel="Sim"):
         cursor = conexao.cursor()
 
         cursor.execute("""
-        INSERT INTO livros (título, autor, ano)
-        VALUES (?, ?, ?)                          
+        INSERT INTO livros (título, autor, ano, disponivel)
+        VALUES (?, ?, ?, "Sim")                          
         """,
         (titulo,autor, ano)
         )
@@ -35,14 +35,31 @@ def cadastrar_livro(titulo, autor, ano, disponivel="Sim"):
         print(f"Erro ao tentar cadastrar livro: {erro}")
     finally:
         # Sempre fechar a conexão, independentemente de sucesso ou erro
-        if conexao:
+         if conexao:
             conexao.close()
 
 titulo = input("Qual o nome do livro que deseja cadastrar:  ")
 autor = input(f"Qual o autor do livro - |{titulo}|: ")
-ano = int(input(f"Qual o nome do livro - |{titulo}|: "))
+ano = int(input(f"Qual o ano do livro - |{titulo}|: "))
 
 cadastrar_livro(titulo, autor, ano)
 
 
 #Etapa 3 - Listagem de Livros
+
+def listar_livros():
+    try:
+        cursor.execute("SELECT * FROM alunos")
+        #fetchall traz todas as linhas da consulta
+        for linha in cursor.fetchall():
+            print(f"ID {linha[0]} | TÍTULO {linha[1]} | AUTOR {linha[2]} | ANO {linha[3]}")
+
+        livro = input("Qual curso você deseja ver os alunos: ")
+        #Selecionando apenas os alunos do curso Computação
+        cursor.execute("SELECT nome, idade FROM alunos WHERE curso = ?", (livro,) )
+        for linha in cursor.fetchall():
+            print(linha)
+    except Exception as erro:
+        print(f"Erro ao tentar listar os livros: {erro}")
+
+#Etapa 4 - Atualização de Disponibilidade:
