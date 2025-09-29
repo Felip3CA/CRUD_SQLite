@@ -15,6 +15,8 @@ disponivel TEXT )
 
 print("Consegui fazer alguma coisa!")
 
+#Etapa 6 - Menu Interativo
+
 
 #Etapa 2 - Função de Cadastro
 def cadastrar_livro(titulo, autor, ano, disponivel="Sim"):
@@ -56,15 +58,49 @@ def listar_livros():
         for linha in cursor.fetchall():
             print(f"ID {linha[0]} | TÍTULO {linha[1]} | AUTOR {linha[2]} | ANO {linha[3]} | DISPONIBILIDADE {linha[4]}")
 
-        livro = input("Qual livro você deseja ver: ")
-
-        cursor.execute("SELECT nome, idade FROM livros WHERE curso = ?", (livro,) )
-        for linha in cursor.fetchall():
-            print(linha)
     except Exception as erro:
         print(f"Erro ao tentar listar os livros: {erro}")
 
+
+
 #Etapa 4 - Atualização de Disponibilidade: 
+
+def atualizar_disponibilidade(id_livro):
+    try:
+        conexao = sqlite3.connect("biblioteca.db")
+        cursor = conexao.cursor()
+
+        cursor.execute("SELECT disponivel FROM biblioteca WHERE id = ?", (id_livro,))
+        resultado = cursor.fetchall()
+
+        if resultado:
+         disponivel_atual = resultado[0]
+
+# Verifica se o campo é 'Sim' ou 'Não' e faz a troca
+         if disponivel_atual == 'Sim':
+                novo_status = 'Não'
+         elif disponivel_atual == 'Não':
+                novo_status = 'Sim'
+         else:
+          print("Acho que você fez algo diferente aqui.")
+          return
+
+            # Atualiza o campo 'disponivel' no banco de dados
+        cursor.execute("UPDATE agendamentos SET disponivel = ? WHERE id = ?", (novo_status, id_livro))
+
+    except Exception as erro:
+        print(f"Erro ao tentar atualizar livro: {erro}")
+
+# Commit da mudança
+conexao.commit()
+
+ # Exibe o commit esperado
+
+
+
+ 
+
+conexao.close()
 
 
 
@@ -103,6 +139,8 @@ deletar = input("Digite o id do livro que deseja deletar: ")
 deletar_livro(deletar)
 
 # Etapa 6 - Menu Interativo:
+
+
 
 
 
